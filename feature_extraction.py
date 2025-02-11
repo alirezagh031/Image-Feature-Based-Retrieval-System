@@ -16,3 +16,14 @@ def sift_feature_extraction(image):
     # Save only the number of keypoints (score) and, if needed, a subset of descriptors.
     return {"Keypoints": len(keypoints), "Descriptors": descriptors.tolist() if descriptors is not None else []}
 
+def region_descriptor(image):
+    contours, _ = cv2.findContours(image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    descriptors = []
+    for contour in contours:
+        area = cv2.contourArea(contour)
+        moments = cv2.moments(contour)
+        centroid = (int(moments['m10'] / moments['m00']), int(moments['m01'] / moments['m00'])) if moments[
+                                                                                                       'm00'] != 0 else (
+        0, 0)
+        descriptors.append({'Area': area, 'Centroid': centroid})
+    return descriptors
