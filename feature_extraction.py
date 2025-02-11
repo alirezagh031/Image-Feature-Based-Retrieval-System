@@ -8,3 +8,11 @@ def preprocess_image(image):
     clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
     image = clahe.apply(image)
     return image
+
+
+def sift_feature_extraction(image):
+    sift = cv2.SIFT_create()
+    keypoints, descriptors = sift.detectAndCompute(image, None)
+    # Save only the number of keypoints (score) and, if needed, a subset of descriptors.
+    return {"Keypoints": len(keypoints), "Descriptors": descriptors.tolist() if descriptors is not None else []}
+
