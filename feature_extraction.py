@@ -47,3 +47,15 @@ def hog_feature_extraction(image, pixels_per_cell=(8, 8), cells_per_block=(2, 2)
                           visualize=True,
                           transform_sqrt=True)
     return hog_features.tolist()
+
+def extract_features(image):
+    sift = sift_feature_extraction(image)
+    region = region_descriptor(image)
+    boundary = boundary_descriptor(image)
+    hog_feats = hog_feature_extraction(image)
+    return {
+        "SIFT": sift,
+        "Region": region,
+        "Boundary": boundary,
+        "HOG": hog_feats
+    }
