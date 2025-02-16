@@ -27,3 +27,14 @@ def region_descriptor(image):
         0, 0)
         descriptors.append({'Area': area, 'Centroid': centroid})
     return descriptors
+
+def boundary_descriptor(image):
+    contours, _ = cv2.findContours(image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    descriptors = []
+    for contour in contours:
+        perimeter = cv2.arcLength(contour, True)
+        area = cv2.contourArea(contour)
+        compactness = (perimeter ** 2) / (4 * np.pi * area) if area != 0 else 0
+        descriptors.append({'Perimeter': perimeter, 'Compactness': compactness})
+    return descriptors
+
