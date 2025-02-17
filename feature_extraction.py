@@ -59,3 +59,26 @@ def extract_features(image):
         "Boundary": boundary,
         "HOG": hog_feats
     }
+
+def compute_sift_score(sift_data):
+    return sift_data.get("Keypoints", 0)
+
+
+def compute_region_score(region_data):
+    if not region_data:
+        return 0.0
+    areas = [r["Area"] for r in region_data]
+    return float(np.mean(areas))
+
+
+def compute_boundary_score(boundary_data):
+    if not boundary_data:
+        return 0.0
+    compactness_values = [b["Compactness"] for b in boundary_data]
+    return float(np.mean(compactness_values))
+
+
+def compute_hog_score(hog_data):
+    if not hog_data:
+        return 0.0
+    return float(np.mean(hog_data))
