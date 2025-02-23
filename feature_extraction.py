@@ -1,6 +1,5 @@
 import cv2
 
-
 def preprocess_image(image):
     if len(image.shape) == 3:
         image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -157,7 +156,6 @@ def run_feature_extraction(base_folder, output_json_path):
         print("Scores saved successfully.")
 
     print(f"✅ Scores and statistics saved to {output_json_path}")
-
 
 if __name__ == "__main__":
     base_folder = os.getcwd()
